@@ -1,38 +1,8 @@
-async function callApi(method, data = null){
-    // const res = await fetch("http://localhost:8000/tasks");
-    // const tasks = await res.json();
-    // console.log(tasks);
-
-    // const req = {
-    //     title: 'またまたチェック'
-    // };
-    // const postRes = await fetch("http://localhost:8000/tasks",{
-    //     method: "POST",
-    //     headers: {
-    //         'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify(req),
-    // });
-    // console.log(await postRes.json());
-
-    // const  putReq = {
-    //     title: "更新する～"
-    // };
-    // const putRes = await fetch("http://localhost:8000/tasks/10",{
-    //     method: "PUT",
-    //     headers: {
-    //         'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify(putReq),
-    // });
-    // console.log(await putRes.json());
-
-    // const deleteRes = await fetch("http://localhost:8000/tasks/12",{
-    //     method: "DELETE",
-    // });
-    // console.log(await deleteRes.json());
-
+async function callApi(method, data = null, id = null){
     let url = "http://localhost:8000/tasks";
+    if (id) {
+        url += `/${id}`;
+    }
     let options = {
         method: method,
         headers: {
@@ -58,11 +28,13 @@ document.getElementById("post").addEventListener("click", async () => {
 
 document.getElementById("put").addEventListener("click", async () => {
     const putData = { title: "さらなる更新を目指して"};
-    const result = await callApi("PUT", putData);
+    const taskId = prompt("updateしたいidを入力")
+    const result = await callApi("PUT", putData, taskId);
     console.log(result);
 });
 
 document.getElementById("delete").addEventListener("click", async () => {
-    const result = await callApi("DELETE");
+    const taskId = prompt("削除したいidを入力")
+    const result = await callApi("DELETE", null, taskId);
     console.log(result);
 });
